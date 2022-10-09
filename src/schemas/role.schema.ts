@@ -4,8 +4,9 @@ import { Document } from 'mongoose';
 export type RoleDocument = Role & Document;
 
 export type Roles = 'Guest' | 'Employee' | 'Department Manager' | 'Super Admin';
+export type PermissionLevels = 0 | 1 | 2 | 3;
 
-export const rolePermissions = {
+export const rolePermissions: Record<Roles, PermissionLevels> = {
   Guest: 0,
   Employee: 1,
   'Department Manager': 2,
@@ -14,11 +15,17 @@ export const rolePermissions = {
 
 @Schema()
 export class Role {
-  @Prop()
-  name: keyof typeof rolePermissions;
+  @Prop({
+    type: String,
+    enum: ['Guest', 'Employee', 'Department Manager', 'Super Admin'],
+  })
+  name: Roles;
 
-  @Prop()
-  permissions: typeof rolePermissions[Roles];
+  @Prop({
+    type: Number,
+    enum: [0, 1, 2, 3],
+  })
+  permissions: PermissionLevels;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(Role);

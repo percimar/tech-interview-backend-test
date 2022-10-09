@@ -24,6 +24,10 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
+  findByUsername(username: string) {
+    return this.userModel.findOne({ username }).exec();
+  }
+
   update(id: number, updateUserDto: UpdateUserDto) {
     return this.userModel.findOneAndUpdate({ _id: id }, updateUserDto).exec();
   }
