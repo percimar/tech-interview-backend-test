@@ -1,32 +1,11 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Tech Interview Backend Test
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
+API Server created with
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
+
+Prerequisite: MongoDB instance running at `localhost:27017` with database `techTestDB`. Collections can be created based on schema files, note that password should be encrypted with [bcrypt](https://bcrypt-generator.com/).
 
 ```bash
 $ npm install
@@ -45,29 +24,111 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## API Documentation
 
-```bash
-# unit tests
-$ npm run test
+- Guest can login
+  ```
+  POST /login
+      Required Body Parameters:
+          username: string
+          password: string
 
-# e2e tests
-$ npm run test:e2e
+      Returns JWT access token, must be included for bearer auth
+  ```
+- Super admin can create or delete a user
 
-# test coverage
-$ npm run test:cov
-```
+  ```
+  POST /user
+      Required Body Parameters:
+          username: string
+          password: string
+          email: string
+          firstname: string
+          department_id: string (GET /department first)
 
-## Support
+  DELETE /user/:id
+  ```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- Super admin can view user details
+  ```
+  GET /user/:id
+  ```
+- Super admin can list all users
+  ```
+  GET /user
+  ```
+- Department manager can list all users in their department
+  ```
+  GET /user
+  ```
+- Super admin can search for users by username, email, department, or role.
 
-## Stay in touch
+  ```
+  GET /user
+      Optional Query Parameters:
+          username: string
+          email: string
+          department_id: string (GET /department first)
+          role_id: string (GET /role first)
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+      Parameters of the same type are OR'd i.e.
+          /user?department_id={IT_dept_id}&department_id={HR_dept_id}
+      will list users in HR or in IT
 
-## License
+      Parameters of different type are AND'd i.e.
+          /user?username=mohd&email=@gmail.com
+      will only list users with mohd in username and @gmail.com in email
+  ```
 
-Nest is [MIT licensed](LICENSE).
+- Department manager can search for users that belong to their department by username, email, department, or role.
+
+  ```
+  GET /user
+      Optional Query Parameters:
+          username: string
+          email: string
+          role_id: string (GET /role first)
+
+      Parameters of the same type are OR'd i.e.
+          /user?role_id={employee_role_id}&role_id={super_admin_role_id}
+      will list users who are employees or super admins
+
+      Parameters of different type are AND'd i.e.
+          /user?username=mohd&email=@gmail.com
+      will only list users with mohd in username and @gmail.com in email
+  ```
+
+- Super admin can create or delete a department
+
+  ```
+  POST /department
+      Required Body Parameters:
+          name: string
+          location: string
+          phoneNumber: string
+
+  DELETE /department/:id
+  ```
+
+- Super admin can view the details of a department
+  ```
+  GET /department/:id
+  ```
+- Super admin can update the details of a department
+  ```
+  PATCH /department/:id
+  ```
+- Department manager can update the details of their department
+  ```
+  PATCH /department/:id
+  ```
+- Super admin can assign a user to a department
+  ```
+  PATCH /user/:id
+      Body Parameter
+          department_id: string (GET /department first)
+  ```
+- Super admin can list all departments
+  ```
+  GET /department
+  ```

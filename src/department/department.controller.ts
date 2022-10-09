@@ -6,7 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
+import { TokenPayloadParam } from 'src/auth/token-payload.decorator';
+import { TokenPayload } from 'src/auth/tokenPayload.dto';
 import { Permission } from 'src/role/permission.decorator';
 import { rolePermissions } from 'src/role/role.schema';
 import { DepartmentService } from './department.service';
@@ -38,7 +42,14 @@ export class DepartmentController {
   update(
     @Param('id') id: string,
     @Body() updateDepartmentDto: UpdateDepartmentDto,
+    @TokenPayloadParam() payload: TokenPayload,
   ) {
+    if (
+      payload.permissionLevel === rolePermissions['Department Manager'] &&
+      payload.department_id !== id
+    ) {
+      throw new HttpException('Not Authorized', HttpStatus.UNAUTHORIZED);
+    }
     return this.departmentService.update(id, updateDepartmentDto);
   }
 

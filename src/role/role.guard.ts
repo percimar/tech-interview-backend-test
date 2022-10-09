@@ -33,10 +33,11 @@ export class RolesGuard implements CanActivate {
       }) as TokenPayload;
 
       // "Super Admin Role has no limitation on the scope of system usage"
-      if (payload.permissions === rolePermissions['Super Admin']) return true;
+      if (payload.permissionLevel === rolePermissions['Super Admin'])
+        return true;
 
       // If the user has the required permission, allow access
-      return requiredPermission.includes(payload.permissions);
+      return requiredPermission.includes(payload.permissionLevel);
     } catch {
       // If verifications produces an error (bad token), deny access
       return false;

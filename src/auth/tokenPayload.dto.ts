@@ -5,5 +5,5 @@ export class TokenPayload {
   username: string;
   department_id: string;
   role: Roles;
-  permissions: PermissionLevels;
+  permissionLevel: PermissionLevels;
 }

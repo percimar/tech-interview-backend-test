@@ -44,7 +44,7 @@ export class UserController {
       );
     }
 
-    if (payload.permissions === rolePermissions['Super Admin']) {
+    if (payload.permissionLevel === rolePermissions['Super Admin']) {
       return this.userService.findAll(username, email, role_id, department_id);
     }
 
@@ -56,13 +56,11 @@ export class UserController {
     );
   }
 
-  @Permission(rolePermissions['Department Manager'])
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
-  @Permission(rolePermissions['Department Manager'])
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);

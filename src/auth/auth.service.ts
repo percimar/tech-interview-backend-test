@@ -21,7 +21,7 @@ export class AuthService {
         username: user.username,
         department_id: user.get('department'),
         role: user.role.name,
-        permissions: user.role.permissionLevel,
+        permissionLevel: user.role.permissionLevel,
       };
       return {
         accessToken: this.jwtService.sign(payload, {
