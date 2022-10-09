@@ -13,7 +13,7 @@ export class IsUniqueUsernameConstraint
   constructor(private readonly userService: UserService) {}
 
   async validate(username: string) {
-    const userOrNull = await this.userService.findByUsername(username);
+    const userOrNull = await this.userService.findOneByUsername(username);
     return userOrNull === null;
   }
 }

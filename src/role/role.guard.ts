@@ -5,7 +5,7 @@ import { Request } from 'express';
 import { TokenPayload } from 'src/auth/tokenPayload.dto';
 
 import { PERMISSION_KEY } from './permission.decorator';
-import { PermissionLevel, rolePermissions } from './role.schema';
+import { PermissionLevels, rolePermissions } from './role.schema';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -16,7 +16,7 @@ export class RolesGuard implements CanActivate {
 
   canActivate(context: ExecutionContext): boolean {
     const requiredPermission = this.reflector.getAllAndOverride<
-      PermissionLevel[]
+      PermissionLevels[]
     >(PERMISSION_KEY, [context.getHandler(), context.getClass()]);
     // If no permission is required, always allow access
     if (!requiredPermission) return true;

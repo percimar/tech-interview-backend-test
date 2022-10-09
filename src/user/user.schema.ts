@@ -3,26 +3,31 @@ import mongoose, { Document } from 'mongoose';
 import { Department } from '../department/department.schema';
 import { Role } from '../role/role.schema';
 
-export type UserDocument = User & Document;
+export type UserDocument = User &
+  Document<mongoose.Schema.Types.ObjectId, null, User>;
 
 @Schema()
 export class User {
-  @Prop()
+  @Prop({ required: true, unique: true })
   username: string;
 
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
-  @Prop()
+  @Prop({ required: true })
   firstName: string;
 
-  @Prop()
+  @Prop({ required: true, unique: true })
   email: string;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Role' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Role', required: true })
   role: Role;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Department' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Department',
+    required: true,
+  })
   department: Department;
 }
 

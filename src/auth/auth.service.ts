@@ -14,13 +14,14 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto) {
-    const user = await this.usersService.findByUsername(loginDto.username);
+    const user = await this.usersService.findOneByUsername(loginDto.username);
     if (user && (await bcrypt.compare(loginDto.password, user.password))) {
       const payload: TokenPayload = {
         sub: user.id,
         username: user.username,
+        department_id: user.get('department'),
         role: user.role.name,
-        permissions: user.role.permissions,
+        permissions: user.role.permissionLevel,
       };
       return {
         accessToken: this.jwtService.sign(payload, {

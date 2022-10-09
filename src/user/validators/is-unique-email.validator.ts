@@ -11,7 +11,7 @@ export class IsUniqueEmailConstraint implements ValidatorConstraintInterface {
   constructor(private readonly userService: UserService) {}
 
   async validate(email: string) {
-    const userOrNull = await this.userService.findByEmail(email);
+    const userOrNull = await this.userService.findOneByEmail(email);
     return userOrNull === null;
   }
 }

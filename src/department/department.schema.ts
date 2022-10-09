@@ -6,13 +6,13 @@ export type DepartmentDocument = Department &
 
 @Schema()
 export class Department {
-  @Prop()
+  @Prop({ required: true, unique: true })
   name: string;
 
-  @Prop()
+  @Prop({ required: true })
   location: string;
 
-  @Prop()
+  @Prop({ required: true })
   phoneNumber: string;
 }
 

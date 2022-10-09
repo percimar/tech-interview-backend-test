@@ -48,15 +48,41 @@ export class UserService {
     return createdUser.save();
   }
 
-  findAll() {
-    return this.userModel.find().exec();
+  findAll(
+    username?: string,
+    email?: string,
+    role_id?: string,
+    department_id?: string,
+  ) {
+    let query = this.userModel.find({
+      username: new RegExp(username || '', 'i'),
+      email: new RegExp(email || '', 'i'),
+    });
+    if (role_id) query = query.where('role').equals(role_id);
+    if (department_id) query = query.where('department').equals(department_id);
+    return query.select('-password').exec();
+  }
+
+  findAllByDepartmentId(
+    department_id: string,
+    username?: string,
+    email?: string,
+    role_id?: string,
+  ) {
+    let query = this.userModel.find({
+      department: department_id,
+      username: new RegExp(username || '', 'i'),
+      email: new RegExp(email || '', 'i'),
+    });
+    if (role_id) query = query.where('role').equals(role_id);
+    return query.select('-password').exec();
   }
 
   findOne(id: string) {
     return this.userModel.findById(id).populate('role').exec();
   }
 
-  findByUsername(username: string) {
+  findOneByUsername(username: string) {
     return (
       this.userModel
         // Regex i flag makes search case insensitive, ^ and $ make it exact
@@ -66,7 +92,7 @@ export class UserService {
     );
   }
 
-  findByEmail(email: string) {
+  findOneByEmail(email: string) {
     return (
       this.userModel
         // Regex i flag makes search case insensitive, ^ and $ make it exact
