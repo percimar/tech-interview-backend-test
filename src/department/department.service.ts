@@ -26,6 +26,15 @@ export class DepartmentService {
     return this.departmentModel.findById(id).exec();
   }
 
+  findOneByName(name: string) {
+    return (
+      this.departmentModel
+        // Regex i flag makes search case insensitive, ^ and $ make it exact
+        .findOne({ name: new RegExp('^' + name + '$', 'i') })
+        .exec()
+    );
+  }
+
   update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
     return this.departmentModel
       .findByIdAndUpdate(id, updateDepartmentDto)

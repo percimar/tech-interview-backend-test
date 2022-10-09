@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Department, DepartmentSchema } from './department.schema';
 import { DepartmentService } from './department.service';
 import { DepartmentController } from './department.controller';
+import { IsUniqueDepartmentConstraint } from './validators/is-unique-department.validator';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { DepartmentController } from './department.controller';
     ]),
   ],
   controllers: [DepartmentController],
-  providers: [DepartmentService],
+  providers: [DepartmentService, IsUniqueDepartmentConstraint],
   exports: [DepartmentService],
 })
 export class DepartmentModule {}
