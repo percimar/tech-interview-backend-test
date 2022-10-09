@@ -2,11 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { User, UserDocument } from 'src/schemas/user.schema';
+import { User, UserDocument } from './user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-// TODO: Permissions
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
@@ -20,19 +19,25 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  findOne(id: number) {
-    return this.userModel.findById(id).exec();
+  findOne(id: string) {
+    return this.userModel.findById(id).populate('role').exec();
   }
 
   findByUsername(username: string) {
-    return this.userModel.findOne({ username }).exec();
+    return (
+      this.userModel
+        // Regex i flag makes search case insensitive, ^ and $ make it exact
+        .findOne({ username: new RegExp('^' + username + '$', 'i') })
+        .populate('role')
+        .exec()
+    );
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto) {
     return this.userModel.findOneAndUpdate({ _id: id }, updateUserDto).exec();
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.userModel.findOneAndDelete({ _id: id }).exec();
   }
 }

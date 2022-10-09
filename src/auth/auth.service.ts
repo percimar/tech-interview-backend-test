@@ -1,20 +1,33 @@
+import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+
 import { UserService } from 'src/user/user.service';
 import { LoginDto } from './login.dto';
-import * as bcrypt from 'bcrypt';
+import { TokenPayload } from './tokenPayload.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private usersService: UserService) {}
+  constructor(
+    private readonly usersService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async login(loginDto: LoginDto) {
     const user = await this.usersService.findByUsername(loginDto.username);
     if (user && (await bcrypt.compare(loginDto.password, user.password))) {
-      // removing password field from user object
-      // variable only exists for destructuring of user object
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...userDetails } = user;
-      return userDetails;
+      const payload: TokenPayload = {
+        sub: user.id,
+        username: user.username,
+        role: user.role.name,
+        permissions: user.role.permissions,
+      };
+      return {
+        accessToken: this.jwtService.sign(payload, {
+          secret: process.env.JWT_SECRET,
+          expiresIn: '1d',
+        }),
+      };
     }
     return null;
   }

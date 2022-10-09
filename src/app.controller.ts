@@ -1,20 +1,15 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Post, Body } from '@nestjs/common';
 import { AuthService } from './auth/auth.service';
 import { LoginDto } from './auth/login.dto';
+import { Permission } from './role/permission.decorator';
+import { rolePermissions } from './role/role.schema';
 
 @Controller()
 export class AppController {
-  constructor(
-    private readonly appService: AppService,
-    private readonly authService: AuthService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
+  // If we have other auth functions this would be moved to AuthController
+  @Permission(rolePermissions['Guest'])
   @Post('login')
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);
