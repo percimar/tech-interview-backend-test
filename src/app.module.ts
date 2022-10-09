@@ -11,7 +11,10 @@ import { RoleModule } from './role/role.module';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost:27017/techTestDB'),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      cache: true,
+      isGlobal: true,
+    }),
     UserModule,
     DepartmentModule,
     AuthModule,

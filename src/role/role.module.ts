@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 
 import { RolesGuard } from './role.guard';
 import { Role, RoleSchema } from './role.schema';
+import { RoleService } from './role.service';
 
 @Module({
   imports: [
@@ -16,6 +17,8 @@ import { Role, RoleSchema } from './role.schema';
       provide: APP_GUARD,
       useClass: RolesGuard,
     },
+    RoleService,
   ],
+  exports: [RoleService],
 })
 export class RoleModule {}
