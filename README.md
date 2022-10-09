@@ -5,7 +5,7 @@ API Server created with
 
 ## Installation
 
-Prerequisite: MongoDB instance running at `localhost:27017` with database `techTestDB`. Collections can be created based on schema files, note that password should be encrypted with [bcrypt](https://bcrypt-generator.com/).
+Prerequisite: MongoDB instance running at `localhost:27017` with database `techTestDB`. Some sample data is available in the `db_data` directory. Password for all sample users is 'password' encrypted with [bcrypt](https://bcrypt-generator.com/).
 
 ```bash
 $ npm install
@@ -27,6 +27,7 @@ $ npm run start:prod
 ## API Documentation
 
 - Guest can login
+
   ```
   POST /login
       Required Body Parameters:
@@ -35,6 +36,7 @@ $ npm run start:prod
 
       Returns JWT access token, must be included for bearer auth
   ```
+
 - Super admin can create or delete a user
 
   ```

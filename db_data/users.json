@@ -1,0 +1,72 @@
+[{
+  "_id": {
+    "$oid": "6341d33ad73bc3396c866334"
+  },
+  "username": "asmar",
+  "firstName": "Asmar",
+  "email": "Asmar@email.com",
+  "role": {
+    "$oid": "63428c760920ac7c8a624a35"
+  },
+  "department": {
+    "$oid": "6342904d0920ac7c8a624a59"
+  },
+  "password": "$2a$08$Vx1D.4OEC3A7QyxP27D5OetRcl.Ekhx01wR.NYxKdxtQVG9LXA9Wa"
+},{
+  "_id": {
+    "$oid": "6342ec744130385bb5ba8070"
+  },
+  "username": "admin",
+  "password": "$2b$08$QlcjWuGnAFkngL4ieKVPle4yrACaQgW99Ou5DLIoETz72l7qmBo32",
+  "firstName": "admin2",
+  "email": "admin@email.com",
+  "role": {
+    "$oid": "63428c930920ac7c8a624a36"
+  },
+  "department": {
+    "$oid": "6342ef790920ac7c8a624a7c"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63431ccd0920ac7c8a624acf"
+  },
+  "username": "osama",
+  "firstName": "Osama",
+  "email": "osama@gmail.com",
+  "role": {
+    "$oid": "63428c760920ac7c8a624a35"
+  },
+  "department": {
+    "$oid": "6342ef790920ac7c8a624a7c"
+  },
+  "password": "$2a$08$Vx1D.4OEC3A7QyxP27D5OetRcl.Ekhx01wR.NYxKdxtQVG9LXA9Wa"
+},{
+  "_id": {
+    "$oid": "63431d080920ac7c8a624ada"
+  },
+  "username": "aliahmad",
+  "firstName": "Ali",
+  "email": "aahmed@yahoo.com",
+  "role": {
+    "$oid": "63428c360920ac7c8a624a34"
+  },
+  "department": {
+    "$oid": "6342ef790920ac7c8a624a7c"
+  },
+  "password": "$2a$08$Vx1D.4OEC3A7QyxP27D5OetRcl.Ekhx01wR.NYxKdxtQVG9LXA9Wa"
+},{
+  "_id": {
+    "$oid": "63431d3d0920ac7c8a624adf"
+  },
+  "username": "mohammed",
+  "firstName": "Mohammed",
+  "email": "mohd1234@gmail.com",
+  "role": {
+    "$oid": "63428c360920ac7c8a624a34"
+  },
+  "department": {
+    "$oid": "6342904d0920ac7c8a624a59"
+  },
+  "password": "$2a$08$Vx1D.4OEC3A7QyxP27D5OetRcl.Ekhx01wR.NYxKdxtQVG9LXA9Wa"
+}]

@@ -1,0 +1,25 @@
+[{
+  "_id": {
+    "$oid": "63428c100920ac7c8a624a33"
+  },
+  "name": "Guest",
+  "permissionLevel": 0
+},{
+  "_id": {
+    "$oid": "63428c360920ac7c8a624a34"
+  },
+  "name": "Employee",
+  "permissionLevel": 1
+},{
+  "_id": {
+    "$oid": "63428c760920ac7c8a624a35"
+  },
+  "name": "Department Manager",
+  "permissionLevel": 2
+},{
+  "_id": {
+    "$oid": "63428c930920ac7c8a624a36"
+  },
+  "name": "Super Admin",
+  "permissionLevel": 3
+}]

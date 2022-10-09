@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "6342904d0920ac7c8a624a59"
+  },
+  "name": "Information Technology",
+  "location": "Doha, Qatar",
+  "phoneNumber": "+974 6607 8464"
+},{
+  "_id": {
+    "$oid": "6342ef790920ac7c8a624a7c"
+  },
+  "name": "Accounting",
+  "location": "Al-Wakra, Qatar",
+  "phoneNumber": "+974 4488 2464"
+}]
